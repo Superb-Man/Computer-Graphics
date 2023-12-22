@@ -243,7 +243,7 @@ void display() {
     glPushMatrix() ;
     glTranslatef(currPos.x, currPos.y,currPos.z);
 	glRotatef(-rotate%360, sin(ball_theta*M_PI /180),-cos(ball_theta*M_PI/180),0);
-	drawRollingSphere(20,24,3) ;
+	drawRollingSphere(ball.stacks,ball.slices,ball.radius) ;
     glPopMatrix();
     boundary = 5*sq_length ;
 
