@@ -68,27 +68,32 @@ void drawCylinder() {
     int segments = 100 ;
 
     glTranslatef((1-scaling)/sqrt(2),0,0) ;
+    //angle is acos(0.33)
     glRotatef(-70.5287794/2,0,0,1) ;
 
+    //in the beginning
     GLfloat temp_x = radius ; 
     GLfloat temp_y = 0 ;
-    GLfloat cur_x, curry;
+
+    GLfloat x, y ;
     glBegin(GL_QUADS);
         for (int i = 1; i <= segments; i++) {
-            GLfloat theta_2 = i * theta / segments;
-            cur_x = radius * cos(theta_2);
-            curry = radius * sin(theta_2);
+            GLfloat theta_2 = i * theta / segments ;
+            x = radius * cos(theta_2) ;
+            y = radius * sin(theta_2)  ;
 
-            glVertex3f(cur_x,curry,height/2);
-            glVertex3f(cur_x,curry,-height/2);
+            glVertex3f(x,y ,height/2) ;
+            glVertex3f(x,y ,-height/2) ; 
 
-            glVertex3f(temp_x, temp_y ,-height/2);
-            glVertex3f(temp_x,temp_y , height/2);
+            glVertex3f(temp_x, temp_y ,-height/2) ;
+            glVertex3f(temp_x,temp_y , height/2) ;
 
-            temp_x = cur_x;
-            temp_y = curry;
+            //join the points
+            //use the previous x,y
+            temp_x = x ;
+            temp_y = y ;
         }
-    glEnd();
+    glEnd() ;
 }
 
 void drawCylinder_v2(GLfloat angle, GLfloat x , GLfloat y , GLfloat z) {
@@ -216,21 +221,24 @@ void drawSphere_v2() {
 
 void drawAllSpheres() {
 
-    glColor3f(0.0f, 1.0f, 0.0f);
+    glColor3f(0.0f, 0.0f, 1.0f);
     glPushMatrix();
     drawSphere_v2() ;
     glPopMatrix();
 
+    glColor3f(1.0f, 1.0f, 0.0f);
     glPushMatrix();
     glRotatef(180.0, 0, 1, 0);
     drawSphere_v2() ;
     glPopMatrix();
    
+    glColor3f(0.0f, 1.0f, 1.0f);
     glPushMatrix();
     glRotatef(90.0, 0, 1, 0);
     drawSphere_v2() ;
     glPopMatrix();
 
+    glColor3f(1.0f, 0.0f, 0.0f);
     glPushMatrix();
     glRotatef(270.0, 0, 1, 0);
     drawSphere_v2() ;
@@ -242,12 +250,16 @@ void drawAllSpheres() {
     drawSphere_v2() ;
     glPopMatrix();
 
+    glColor3f(0.0f, 1.0f, 0.0f);
     glPushMatrix();
     glRotatef(90.0, 0, 0, 1);
     drawSphere_v2() ;
     glPopMatrix();
 }
 
+
+
+//Rolliing Sphere offline task-2
 
 void square(double a) {
     glBegin(GL_QUADS);{
@@ -321,7 +333,6 @@ void drawArrow(point& currPos , double ball_theta) {
     glPushMatrix();
     glTranslatef(currPos.x, currPos.y, currPos.z);
     glRotatef(ball_theta , 0,0,1) ;
-    // else glRotatef(ball_theta + 180, 0,0,1) ;
     glLineWidth(5);
     glBegin(GL_LINES);{
         glVertex3f(0,0,0);
@@ -340,9 +351,51 @@ void drawSquares(double l) {
     glColor3f(1,0,0);
 	glPushMatrix();
 	glTranslatef(0,0,-3);
-	glRotatef(45,0,0,1);
+	glRotatef(0,0,0,1);
 	drawBoundaries(l);
 	glPopMatrix();
 }
 
+void drawBnWGrid(int n ,int l){
+	for(int i = 0; i < n ; i++){
+        GLfloat x = l * sqrt(2) + i * 2 * l *sqrt(2) ;
+		glPushMatrix();
+            glTranslatef(x, 0, 0);
+            glColor3f(1.,1.,1.);
+            for(int j= 0; j < n ; j++){		
+                GLfloat y = j * l * 2 ;
+                glPushMatrix();
+                    glRotatef(45 , 0, 0, 1);
+                    glTranslatef(y, y, 0);
+                    square(l);
+                glPopMatrix();   
 
+                glPushMatrix();
+                    glRotatef(45 , 0, 0, 1);
+                    glTranslatef(-y,-y, 0);
+                    square(l);
+                glPopMatrix();   
+            }
+		glPopMatrix();
+
+
+		glPushMatrix();
+            glTranslatef(-x, 0, 0);
+            glColor3f(1.,1.,1.);
+            for(int j= 0; j < n ; j++){		
+                GLfloat y = j * l * 2 ;
+                glPushMatrix();
+                    glRotatef(45 , 0, 0, 1);
+                    glTranslatef(y, y, 0);
+                    square(l);
+                glPopMatrix();   
+
+                glPushMatrix();
+                    glRotatef(45 , 0, 0, 1);
+                    glTranslatef(-y,-y, 0);
+                    square(l);
+                glPopMatrix();   
+            }
+		glPopMatrix();
+	}
+}

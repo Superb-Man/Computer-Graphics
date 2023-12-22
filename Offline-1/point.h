@@ -39,3 +39,14 @@ point& rotation(point& axis, point& vector , GLfloat angle){
 
     return vector ;
 }
+
+point crossProduct(point axis,point vector) {
+    point u = point(axis.y * vector.z - vector.y * axis.z ,
+                    -axis.x * vector.z + vector.x * axis.z, axis.x * vector.y - axis.y * vector.x) ;
+    return u ;
+}
+
+point normalize(point p) {
+    GLfloat length = sqrt(p.x * p.x + p.y * p.y + p.z * p.z) ;
+    return point(p.x / length , p.y / length , p.z / length) ;
+}

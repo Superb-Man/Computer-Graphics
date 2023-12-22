@@ -32,8 +32,8 @@ void display() {
     glPushMatrix() ;
     glRotatef(angle,0,1,0) ;
     drawAxes() ;
-    // drawOctaHedral() ;
-    // drawAllCylinders() ;
+    drawOctaHedral() ;
+    drawAllCylinders() ;
     drawAllSpheres() ;
     glPopMatrix() ;
 
@@ -114,10 +114,10 @@ void special(int key, int x, int y) {
         eyepos = eyepos - look * move_rate;
         break ;
     case GLUT_KEY_PAGE_UP :
-        eyepos = eyepos + up * move_rate;
+        eyepos = eyepos - up * move_rate;
         break ;
     case GLUT_KEY_PAGE_DOWN :
-        eyepos = eyepos - up * move_rate;
+        eyepos = eyepos + up * move_rate;
         break ;
     }
     glutPostRedisplay() ;
