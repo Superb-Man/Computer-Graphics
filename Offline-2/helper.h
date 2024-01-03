@@ -3,9 +3,6 @@
 #include"matrix.h"
 #include"utils.h"
 
-point eye, look , up;
-double fovY, aspectRatio, near, far;
-
 Matrix triangleMatrix(point& p1 , point& p2, point& p3) {
     Matrix m(4,3);
     // m.set(0,0,p1.x);
@@ -63,16 +60,36 @@ Matrix scale(point& p1){
     return m;
 }
 
+void scaling_column(Matrix& m, int col){
+    double s = m.get(m.getDimension().first - 1,col) ;
+    for(int i = 0 ; i < m.getDimension().first ; i++){
+        m.set(i,col,m.get(i,col)/s);
+    }
+}
+
 point R(point p, point a, double angle){
     //𝑅(𝑥⃗, 𝑎⃗, 𝜃) =𝑐𝑜𝑠 𝑐𝑜𝑠 𝜃 𝑥⃗ + (1 −𝑐𝑜𝑠 𝑐𝑜𝑠 𝜃 )(𝑎⃗ ∙ 𝑥⃗)𝑎⃗ +𝑠𝑖𝑛 𝑠𝑖𝑛 𝜃 (𝑎⃗ × 𝑥⃗)
     point r1 ;
     r1 =  p * cos(angle);
-    r1 = r1 + (a * dotProduct(a,p)) * (1 - cos(angle));
+    r1 = r1 + a * (dotProduct(a,p) * (1 - cos(angle)));
     r1 = r1 + crossProduct(a,p) * sin(angle);
     return r1;
 }
 
-Matrix rotate(point& p1 , double angle){
+struct Transformation {
+    point eye, look , up;
+    double fovY, aspectRatio, near, far;
+    Matrix rotate(point& p1 , double angle);
+    Matrix translete(point& p1);
+    Matrix scale(point& p1);
+    void viewTransformation(std::vector<Matrix>& matrices);
+    void projectionTransformation(std::vector<Matrix>& matrices);
+
+};
+
+
+
+Matrix Transformation::rotate(point& p1 , double angle){
     // a.normalize()
     // c1=R(i,a,angle)
     // c2=R(j,a,angle)
@@ -97,8 +114,7 @@ Matrix rotate(point& p1 , double angle){
 // r.normalize()
 // u = r X l
 
-
-void viewTransformation() {
+void Transformation::viewTransformation(std::vector<Matrix>& matrices) {
     point l = look - eye;
     l = normalize(l);
     point r = crossProduct(l,up);
@@ -118,7 +134,11 @@ void viewTransformation() {
     R.makeRow(2,{-l.x,-l.y,-l.z,0});
     //now multiply R and T to get the view transformation matrix V.
     Matrix V = R * T;
-    //need to add
+    for(int i = 0 ; i < matrices.size() ; i++){
+        matrices[i] = V * matrices[i];
+        //need to add
+        print(matrices[i],3,3,true);
+    }
     
 }
 
@@ -126,10 +146,11 @@ void viewTransformation() {
 // fovX = fovY * aspectRatio
 // t = near * tan(fovY/2)
 // r = near * tan(fovX/2)
-void projectionTransformation(){
+void Transformation::projectionTransformation(std::vector<Matrix>& matrices){
     double fovX = fovY * aspectRatio;
-    double t = near * tan(fovY/2) * (3.1416/180) ;
-    double r = near * tan(fovX/2) * (3.1416/180) ;
+    double pi = (double) (acos((double)-1.0)) ;
+    double t = near * tan((fovY/2.0) * (pi/180.0)) ;
+    double r = near * tan((fovX/2.0) * (pi/180.0)) ;
     Matrix P(4,4);
 
     P.makeRow(0,{near/r,0,0,0});
@@ -137,5 +158,14 @@ void projectionTransformation(){
     P.makeRow(2,{0,0,-(far+near)/(far-near),-(2*far*near)/(far-near)});
     P.makeRow(3,{0,0,-1,0});
     
-    //add new 
+    for(int i = 0 ; i < matrices.size() ; i++){
+        matrices[i] = P * matrices[i];
+        //need to add
+        scaling_column(matrices[i],0);
+        scaling_column(matrices[i],1);
+        scaling_column(matrices[i],2);
+
+        print(matrices[i],3,3,true) ;
+        
+    }
 }
