@@ -91,10 +91,11 @@ std::vector<Matrix> mvpTransformation(){
 }
 
 int main() {
+
     std::vector<Matrix>matrices = mvpTransformation();
-    // FILE* fp = freopen("config.txt", "r",stdin);
-    // int width, height;
-    // std::cin >> width >> height;
-    // z_bufferApply(width, height, matrices);
-    // fclose(fp);
+    FILE* fp = freopen("config.txt", "r",stdin);
+    double width = 500, height = 500;
+    std::cin >> width >> height;
+    z_bufferApply(width, height, matrices);
+    fclose(fp);
 }

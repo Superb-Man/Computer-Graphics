@@ -55,11 +55,18 @@ struct Line{
 };
 
 //paralell of x axis(the second line)
-std::pair<point,double> intersection_t(Line& l, double y){
+std::pair<point,double> intersection_t(Line l, double val,int axis){
     //l = u + tv
-    // Y = y
-    //u_y+t*v_y = y 
-    double t = (y - l.u.y) / l.v.y;
+    // Val = val
+    //u_val+t*v_val = val 
+
+
+    double x_y[2] = {0,-2.0} ;
+    std::pair<double,double>d[2] = {{l.u.x,l.v.x},{l.u.y,l.v.y}} ;
+    double t = (val - d[axis].first) / d[axis].second ;
+    if(fabs(0-d[axis].second) < 1e-6) {
+        t = x_y[axis] ;
+    }
     point p = l.u + l.v * t;
 
     return std::make_pair(p,t);
@@ -78,7 +85,7 @@ void print(Matrix& m ,int r , int c , bool col = false) {
     if(!col){
         for(int i = 0 ; i < r ; i++){
             for(int j = 0 ; j < c ; j++){
-                std::cout << std::setprecision(9) ;
+                std::cout << std::setprecision(7) ;
                 std::cout << m.get(i,j) << " ";
             }
             std::cout << std::endl;
@@ -87,7 +94,7 @@ void print(Matrix& m ,int r , int c , bool col = false) {
     else{
         for(int i = 0 ; i < c ; i++){
             for(int j = 0 ; j < r ; j++){
-                std::cout << std::fixed <<std::setprecision(9) ;
+                std::cout << std::fixed <<std::setprecision(7) ;
                 std::cout << m.get(j,i) << " ";
             }
             std::cout << std::endl;

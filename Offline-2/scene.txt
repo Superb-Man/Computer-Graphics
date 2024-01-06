@@ -1,0 +1,73 @@
+0.0 3.0 0.0
+0.0 0.0 0.0 
+0.0 0.0 1.0
+80.0 1.0 1.0 100.0
+push
+translate
+-0.3 0.0 0.0
+rotate
+-15.0 0.0 1.0 0.0
+rotate
+-18.0 1.0 0.0 0.0
+triangle
+1.0 0.0 0.0
+-1.0 0.0 0.0
+0.0 0.0 1.0
+pop
+push
+translate
+-1.1 0.1 0.0
+rotate
+20.0 0.0 0.0 1.0
+rotate
+90.0 0.0 1.0 0.0
+triangle
+1.0 0.0 0.0
+-1.0 0.0 0.0
+0.0 0.0 1.0
+pop
+push
+translate
+-1.0 0.1 0.7
+rotate
+35.0 0.0 0.0 1.0
+rotate
+170.0 0.0 1.0 0.0
+triangle
+1.0 0.0 0.0
+-1.0 0.0 0.0
+0.0 0.0 1.0
+pop
+push
+translate
+2.0 0.0 1.5
+triangle
+1.0 0.0 0.0
+-1.0 0.0 0.0
+0.0 0.0 -1.0
+pop
+push
+translate
+0.0 0.0 2.9
+triangle
+1.0 0.0 0.0
+-1.0 0.0 0.0
+0.0 0.0 -1.0
+pop
+push
+translate
+0.0 0.0 -1.8
+triangle
+1.0 0.0 0.0
+-1.0 0.0 0.0
+0.0 0.0 -1.0
+pop
+push
+translate
+-2.3 0.0 0.0
+triangle
+1.0 0.0 0.0
+-1.0 0.0 0.0
+0.0 0.0 -1.0
+pop
+end
