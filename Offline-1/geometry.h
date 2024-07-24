@@ -24,23 +24,23 @@ void drawAxes() {
 void drawPlane(GLfloat angle,int color_idx) {
    
     glPushMatrix() ;
-    glRotatef(angle,0,1,0) ; //Rotate along y axis
-    
-    point t = center * scaling ;
-    // X = x + t.x , Y = y + t.y , Z = z + t.z
-    glTranslatef(t.x,t.y,t.z) ; // translating to change the co-ordinate, Only scaling will scale refering to the center
-    glScalef(1-scaling,1-scaling,1-scaling) ; //scale it now
+        glRotatef(angle,0,1,0) ; //Rotate along y axis
         
-        glBegin(GL_TRIANGLES);
-            GLfloat *color_code = octahedralPlaneColors[color_idx] ;
-            glColor3fv(color_code);
+        point t = center * scaling ;
+        // X = x + t.x , Y = y + t.y , Z = z + t.z
+        glTranslatef(t.x,t.y,t.z) ; // translating to change the co-ordinate, Only scaling will scale refering to the center
+        glScalef(1-scaling,1-scaling,1-scaling) ; //scale it now
+            
+            glBegin(GL_TRIANGLES);
+                GLfloat *color_code = octahedralPlaneColors[color_idx] ;
+                glColor3fv(color_code);
 
-            //Given in question
+                //Given in question
 
-            glVertex3f(1,0,0);
-            glVertex3f(0,1,0);
-            glVertex3f(0,0,1);
-        glEnd(); 
+                glVertex3f(1,0,0);
+                glVertex3f(0,1,0);
+                glVertex3f(0,0,1);
+            glEnd(); 
     glPopMatrix() ;
 }
 
@@ -99,7 +99,7 @@ void drawCylinder() {
 void drawCylinder_v2(GLfloat angle, GLfloat x , GLfloat y , GLfloat z) {
     for(int i = 0; i < 4; i++) {
         glPushMatrix() ;
-        drawCylinder() ;
+            drawCylinder() ;
         glPopMatrix() ;
         glRotatef(angle,x,y,z) ;
     }
@@ -110,20 +110,20 @@ void drawAllCylinders() {
     glColor3f(0.31, 0.365, 0.184);
 
     glPushMatrix();
-    glRotatef(45,0,1,0); //rotate along y axis
-    drawCylinder_v2(90,0,1,0) ;
+        glRotatef(45,0,1,0); //rotate along y axis
+        drawCylinder_v2(90,0,1,0) ;
     glPopMatrix();
 
     glPushMatrix();
-    glRotatef(90,1,0,0);  //rotate along x axis
-    glRotatef(45,0,1,0); //rotate along y axis
-    drawCylinder_v2(90,0,1,0) ;
+        glRotatef(90,1,0,0);  //rotate along x axis
+        glRotatef(45,0,1,0); //rotate along y axis
+        drawCylinder_v2(90,0,1,0) ;
     glPopMatrix();
 
     glPushMatrix();
-    glRotatef(90,0,0,1);  //rotate along z axis
-    glRotatef(45,0,1,0); //rotate along y axis
-    drawCylinder_v2(90,0,1,0) ;
+        glRotatef(90,0,0,1);  //rotate along z axis
+        glRotatef(45,0,1,0); //rotate along y axis
+        drawCylinder_v2(90,0,1,0) ;
     glPopMatrix();
 }
 
@@ -223,37 +223,37 @@ void drawAllSpheres() {
 
     glColor3f(0.0f, 0.0f, 1.0f);
     glPushMatrix();
-    drawSphere_v2() ;
+        drawSphere_v2() ;
     glPopMatrix();
 
     glColor3f(1.0f, 1.0f, 0.0f);
     glPushMatrix();
-    glRotatef(180.0, 0, 1, 0);
-    drawSphere_v2() ;
+        glRotatef(180.0, 0, 1, 0);
+        drawSphere_v2() ;
     glPopMatrix();
    
     glColor3f(0.0f, 1.0f, 1.0f);
     glPushMatrix();
-    glRotatef(90.0, 0, 1, 0);
-    drawSphere_v2() ;
+        glRotatef(90.0, 0, 1, 0);
+        drawSphere_v2() ;
     glPopMatrix();
 
     glColor3f(1.0f, 0.0f, 0.0f);
     glPushMatrix();
-    glRotatef(270.0, 0, 1, 0);
-    drawSphere_v2() ;
+        glRotatef(270.0, 0, 1, 0);
+        drawSphere_v2() ;
     glPopMatrix();
 
     glColor3f(1.0f, 0.0f, 0.0f);
     glPushMatrix();
-    glRotatef(270.0, 0, 0, 1);
-    drawSphere_v2() ;
+        glRotatef(270.0, 0, 0, 1);
+        drawSphere_v2() ;
     glPopMatrix();
 
     glColor3f(0.0f, 1.0f, 0.0f);
     glPushMatrix();
-    glRotatef(90.0, 0, 0, 1);
-    drawSphere_v2() ;
+        glRotatef(90.0, 0, 0, 1);
+        drawSphere_v2() ;
     glPopMatrix();
 }
 
@@ -331,28 +331,28 @@ void drawRollingSphere(int stacks,int slices,double radius) {
 void drawArrow(point& currPos , double ball_theta) {
     glColor3f(0,0,1);
     glPushMatrix();
-    glTranslatef(currPos.x, currPos.y, currPos.z);
-    glRotatef(ball_theta , 0,0,1) ;
-    glLineWidth(5);
-    glBegin(GL_LINES);{
-        glVertex3f(0,0,0);
-        glVertex3f(8, 0,0);
-    }glEnd();
-    glBegin(GL_TRIANGLES);{
-        glVertex3f(8,0,0);
-        glVertex3f(6, 2, 0);
-        glVertex3f(6, -2, 0);
-    }glEnd();
-    glLineWidth(1);
+        glTranslatef(currPos.x, currPos.y, currPos.z);
+        glRotatef(ball_theta , 0,0,1) ;
+        glLineWidth(5);
+        glBegin(GL_LINES);{
+            glVertex3f(0,0,0);
+            glVertex3f(8, 0,0);
+        }glEnd();
+        glBegin(GL_TRIANGLES);{
+            glVertex3f(8,0,0);
+            glVertex3f(6, 2, 0);
+            glVertex3f(6, -2, 0);
+        }glEnd();
+        glLineWidth(1);
     glPopMatrix();
 }
 
 void drawSquares(double l) {
     glColor3f(1,0,0);
 	glPushMatrix();
-	glTranslatef(0,0,-3);
-	glRotatef(0,0,0,1);
-	drawBoundaries(l);
+        glTranslatef(0,0,-3);
+        glRotatef(0,0,0,1);
+        drawBoundaries(l);
 	glPopMatrix();
 }
 

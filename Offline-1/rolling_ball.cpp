@@ -120,8 +120,14 @@ void move(int forward) {
     
     double x = ball.velocity * cos(temp_theta * M_PI / 180.0) ;
     double y = ball.velocity * sin(temp_theta * M_PI / 180.0) ;
+
     currPos = currPos + point(x,y,0) ;
-    rotate = rotate + forward * 30 ;
+
+    double distance = sqrt((currPos.x - temp.x)*(currPos.x - temp.x) + (currPos.y - temp.y)*(currPos.y - temp.y)) ;
+
+    rotate = (360*1.0*distance)/(2*M_PI*ball.radius) ;
+
+    rotate*=forward ;
     
     ball_theta = temp_theta ;
     
