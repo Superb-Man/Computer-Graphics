@@ -96,7 +96,7 @@ void z_bufferApply(double width, double height,std::vector<Matrix>&matrices) {
             Line l3 ;
             l3.u = scanline_p1.first ;
             l3.v = scanline_p2.first - scanline_p1.first ;
-            for(int j = left_idx ;j < right_idx ; j++) {
+            for(int j = left_idx ;j <=right_idx ; j++) {
                 double new_x = left_x + j * dx;
                 std::pair<point,double> temp = intersection_t(l3, new_x,0);
                 point p = temp.first;
@@ -104,7 +104,7 @@ void z_bufferApply(double width, double height,std::vector<Matrix>&matrices) {
                 if(p.z < z_buffer[i][j] && p.z > -1.0) {
                     z_buffer[i][j] = p.z;
                     //color
-                    image.set_pixel(j, i, triangle.color);
+                    image.set_pixel(j, i, triangle.color.blue, triangle.color.green, triangle.color.red);
                 }
 
             }
@@ -123,12 +123,18 @@ void z_bufferApply(double width, double height,std::vector<Matrix>&matrices) {
         for(int j = 0 ; j < (int)width ; j++){
            if(z_buffer[i][j]== 1) continue;
            else{
-                std::cout << std::fixed << std::setprecision(7) << z_buffer[i][j] << "    ";
+                std::cout << std::fixed << std::setprecision(6) << z_buffer[i][j] << '\t';
            }
         }
         std::cout << "\n" ;
     }
     fclose(zbf) ;
+
+    for(int i = 0; i < (int)height; i++) {
+        delete[] z_buffer[i];
+    }
+    delete[] z_buffer;
+    
 
     image.save_image("z_buffer.bmp") ;
 
